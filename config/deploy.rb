@@ -1,7 +1,7 @@
 # config valid only for Capistrano 3.1
 lock '3.5.0'
 
-set :application, 'deyi'
+set :application, 'live_nav'
 set :deploy_user, "deployer"
 
 set :scm, :git
