@@ -2,14 +2,19 @@ module API
   module V1
     class ChannelsAPI < Grape::API
       
-      resource :channels, desc: '积分墙接口' do
-        desc "获取积分墙渠道列表"
+      helpers API::SharedParams
+      
+      resource :channels, desc: '获取频道列表' do
+        desc "获取频道列表"
         params do 
-          # requires :token, type: String, desc: "用户Token"
-          requires :os_type, type: Integer, desc: "设备系统类型，1为iOS, 2为Android"
+          use :pagination
         end
-        get :list do
-          @channels = Channel.list_for_os(params[:os_type]).opened.sorted.recent
+        get do
+          @channels = Channel.opened.sorted
+          
+          if params[:page]
+            @channels = @channels.paginate page: params[:page], per_page: page_size
+          end
           
           render_json(@channels, API::V1::Entities::Channel)
         end # end get list
