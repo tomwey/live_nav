@@ -11,7 +11,16 @@ module API
           use :pagination
         end
         get do
-          @channels = Channel.opened.sorted
+          
+          if params[:node_id]
+            @node = Node.find_by(nid: params[:node_id])
+            if @node.blank?
+              return render_error(4004, '不存在的频道类别')
+            end
+            @channels = @node.channels.opened.sorted
+          else
+            @channels = Channel.opened.sorted
+          end
           
           if params[:page]
             @channels = @channels.paginate page: params[:page], per_page: page_size
