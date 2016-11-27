@@ -68,7 +68,8 @@ module API
       
       # 电视频道
       class Channel < Base
-        expose :chn_id, :name, :live_url
+        expose :chn_id, as: :id
+        expose :name, :live_url
         # expose :intro, format_with: :null
         expose :title do |model, opts|
           '这是该频道当前正在播放的节目名'
@@ -80,7 +81,8 @@ module API
       
       # 直播
       class LiveStream < Base
-        expose :sid, :name, :live_url
+        expose :sid, as: :id
+        expose :name, :live_url
         # expose :intro, format_with: :null
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
