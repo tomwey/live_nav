@@ -2,6 +2,8 @@ class Channel < ActiveRecord::Base
   validates :name, :live_url, :image, presence: true
   mount_uploader :image, ImageUploader
   
+  has_and_belongs_to_many :nodes
+  
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
   

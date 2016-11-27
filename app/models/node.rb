@@ -2,6 +2,8 @@ class Node < ActiveRecord::Base
   
   validates :name, presence: true
   
+  has_and_belongs_to_many :channels
+  
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
   
