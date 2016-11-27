@@ -24,6 +24,7 @@
       channel: '频道'
       message: '消息'
       common_config: '公共配置'
+      node: '频道节点'
     attributes:
       user:
         mobile: "手机"
@@ -43,6 +44,11 @@
         must_upgrade: '该版本是否必须升级'
         mode: '该版本所用环境'
         opened: '是否打开'
+      node:
+        name: '节点名'
+        sort: '显示顺序'
+        opened: '是否可见'
+        nid: '节点ID'
       page:
         title: '标题'
         body:  '内容'
