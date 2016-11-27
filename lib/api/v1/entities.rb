@@ -59,6 +59,12 @@ module API
         expose :private_token, as: :token, format_with: :null
       end
       
+      # 频道节点
+      class Node < Base
+        expose :nid,  format_with: :null
+        expose :name, format_with: :null
+      end
+      
       # 频道列表
       class Channel < Base
         expose :chn_id, :name, :live_url
