@@ -1,16 +1,16 @@
 module API
   module V1
-    class ChannelsAPI < Grape::API
+    class LiveAPI < Grape::API
       
       helpers API::SharedParams
       
-      resource :channels, desc: '电视频道接口' do
-        desc "获取频道列表"
-        params do 
-          optional :node_id, type: Integer, desc: '频道节点ID，如果不传该参数，默认会获取所有的频道' 
+      resource :live, desc: '直播相关接口' do
+        desc "获取直播列表"
+        params do
+          optional :filter, type: String, desc: '数据过滤用，保留参数，做数据过滤用' 
           use :pagination
         end
-        get do
+        get :list do
           @channels = Channel.opened.sorted
           
           if params[:page]

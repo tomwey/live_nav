@@ -4,7 +4,7 @@ module API
       
       helpers API::SharedParams
       
-      resource :channel_nodes, desc: '获取所有的电视频道目录类别' do
+      resource :channel_nodes, desc: '电视频道节点接口' do
         desc "获取所有的电视频道目录类别"
         get do
           @nodes = Node.opened.sorted
