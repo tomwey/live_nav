@@ -61,7 +61,8 @@ module API
       
       # 频道节点
       class Node < Base
-        expose :nid,  format_with: :null
+        unexpose :id
+        expose :nid, as: :id, format_with: :null
         expose :name, format_with: :null
       end
       
