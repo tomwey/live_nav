@@ -25,6 +25,7 @@
       message: '消息'
       common_config: '公共配置'
       node: '频道节点'
+      live_stream: '直播'
     attributes:
       user:
         mobile: "手机"
@@ -89,6 +90,14 @@
         image: '频道封面图'
         intro: '频道简介'
         live_url: '播放地址'
+        sort: '显示顺序'
+        opened: '是否开启'
+      live_stream:
+        sid: '直播流ID'
+        name: '直播名称'
+        image: '直播封面图'
+        intro: '直播简介'
+        live_url: '直播地址'
         sort: '显示顺序'
         opened: '是否开启'
         

@@ -11,13 +11,13 @@ module API
           use :pagination
         end
         get :list do
-          @channels = Channel.opened.sorted
+          @streams = LiveStream.opened.sorted
           
           if params[:page]
-            @channels = @channels.paginate page: params[:page], per_page: page_size
+            @streams = @streams.paginate page: params[:page], per_page: page_size
           end
           
-          render_json(@channels, API::V1::Entities::Channel)
+          render_json(@streams, API::V1::Entities::LiveStream)
         end # end get list
       end # end resource
       

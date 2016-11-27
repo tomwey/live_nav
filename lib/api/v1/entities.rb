@@ -59,16 +59,25 @@ module API
         expose :private_token, as: :token, format_with: :null
       end
       
-      # 频道节点
+      # 电视频道节点
       class Node < Base
         unexpose :id
         expose :nid, as: :id, format_with: :null
         expose :name, format_with: :null
       end
       
-      # 频道列表
+      # 电视频道
       class Channel < Base
         expose :chn_id, :name, :live_url
+        expose :intro, format_with: :null
+        expose :image do |model, opts|
+          model.image.blank? ? '' : model.image.url(:thumb)
+        end
+      end
+      
+      # 直播
+      class LiveStream < Base
+        expose :sid, :name, :live_url
         expose :intro, format_with: :null
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
