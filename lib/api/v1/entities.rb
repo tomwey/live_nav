@@ -5,6 +5,7 @@ module API
         format_with(:null) { |v| v.blank? ? "" : v }
         format_with(:chinese_date) { |v| v.blank? ? "" : v.strftime('%Y-%m-%d') }
         format_with(:chinese_datetime) { |v| v.blank? ? "" : v.strftime('%Y-%m-%d %H:%M:%S') }
+        format_with(:chinese_time) { |v| v.blank? ? "" : v.strftime('%H:%M') }
         format_with(:money_format) { |v| v.blank? ? 0 : ('%.2f' % v).to_f }
         expose :id
         # expose :created_at, format_with: :chinese_datetime
@@ -70,12 +71,79 @@ module API
       class Channel < Base
         expose :chn_id, as: :id
         expose :name, :live_url
+        expose :view_count
         # expose :intro, format_with: :null
         expose :title do |model, opts|
-          '这是该频道当前正在播放的节目名'
+          model.current_playlist.try(:name) || ''
         end
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
+        end
+      end
+      
+      # 频道节目
+      class Playlist < Base
+        expose :pl_id, as: :id
+        expose :name
+        expose :started_at, as: :start_time, format_with: :chinese_time
+        expose :ended_at, as: :end_time, format_with: :chinese_time
+        expose :vod_url, as: :playback_url, format_with: :null
+        expose :appointed do |model, opts|
+          if opts
+            if opts[:user]
+              user = opts[:user]
+              user.appointed?(model)
+            else
+              false
+            end
+          else
+            false
+          end
+        end
+        expose :current do |model, opts|
+          if opts && opts[:time]
+            if opts[:time] >= model.started_at and opts[:time] < model.ended_at
+              true
+            else
+              false
+            end
+          else
+            false
+          end
+        end
+      end
+      
+      class ChannelDetail < Channel
+        unexpose :title
+        expose :favorited do |model, opts|
+          opts = opts[:opts]
+          if opts
+            user = opts[:user]
+            if user
+              user.favorited?(model)
+            else
+              false
+            end
+          else
+            false
+          end
+        end
+        # Destinations::DestinationResponseEntity.represent trip.destinations, options.merge(custom_field_name: custom_field_value)
+        # expose :today_playlists, using: API::V1::Entities::Playlist do |model, opts|
+        #   model.playlists_for_offset(0)
+        # end
+        expose :today_playlists do |model, opts|
+          time = Time.zone.now
+          user = if opts
+            if opts[:opts]
+              opts[:opts][:user]
+            else
+              nil
+            end
+          else
+            nil
+          end
+          API::V1::Entities::Playlist.represent model.playlists_for_offset(0), options.merge(time: time, user: user)
         end
       end
       
@@ -83,6 +151,7 @@ module API
       class LiveStream < Base
         expose :sid, as: :id
         expose :name, :live_url
+        expose :view_count
         # expose :intro, format_with: :null
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)

@@ -28,6 +28,48 @@ module API
           
           render_json(@channels, API::V1::Entities::Channel)
         end # end get list
+        
+        desc "获取频道详情"
+        params do
+          requires :channel_id, type: Integer, desc: '频道ID'
+          optional :token, type: String, desc: '用户Token'
+        end
+        get '/:channel_id' do
+          @channel = Channel.find_by(chn_id: params[:channel_id])
+          
+          if @channel.blank?
+            return render_error(4004, '该频道不存在')
+          end
+          
+          unless @channel.opened
+            return render_error(2001, '该频道已关闭')
+          end
+          
+          render_json(@channel, API::V1::Entities::ChannelDetail, { user: User.find_by(private_token: params[:token]) })
+        end # end get
+        
+        desc "获取某个频道的节目列表"
+        params do
+          requires :channel_id, type: Integer, desc: '频道ID'
+          optional :offset, type: Integer, desc: '时间偏移，单位为天，不传该值或传0表示取今天的节目单，否则就相对于今天的进行偏移，如果为正，表示未来时间，否则表示过去时间'
+        end
+        get '/:channel_id/playlists' do
+          @channel = Channel.find_by(chn_id: params[:channel_id])
+          
+          if @channel.blank?
+            return render_error(4004, '该频道不存在')
+          end
+          
+          unless @channel.opened
+            return render_error(2001, '该频道已关闭')
+          end
+          
+          offset = (params[:offset] || 0).to_i
+          @playlists = @channel.playlists_for_offset(offset)
+          
+          render_json(@playlists, API::V1::Entities::Playlist)
+        end # end get 
+        
       end # end resource
       
     end

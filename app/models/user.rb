@@ -43,6 +43,29 @@ class User < ActiveRecord::Base
     end
   end
   
+  def appointed?(playlist)
+    return false if playlist.blank?
+    
+    Appointment.where(playlist_id: playlist.id, user_id: self.id).count > 0
+  end
+  def appoint!(playlist)
+    return false if playlist.blank?
+    
+    Appointment.create!(playlist_id: playlist.id, user_id: self.id)
+  end
+  
+  def favorite!(favoriteable)
+    return false if favoriteable.blank?
+    
+    Favorite.create!(favoriteable_id: favoriteable.id, favoriteable_type: favoriteable.class, user_id: self.id)
+  end
+  
+  def favorited?(favoriteable)
+    return false if favoriteable.blank?
+    
+    Favorite.where(favoriteable_id: favoriteable.id, favoriteable_type: favoriteable.class, user_id: self.id).count > 0
+  end
+  
   # 禁用账户
   def block!
     self.verified = false

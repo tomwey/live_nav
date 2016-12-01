@@ -4,6 +4,7 @@ class Channel < ActiveRecord::Base
   
   has_and_belongs_to_many :nodes
   has_many :favorites, as: :favoriteable
+  has_many :playlists, dependent: :destroy
   
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
@@ -19,6 +20,15 @@ class Channel < ActiveRecord::Base
   
   def add_view_count
     self.class.increment_counter(:view_count, self.id)
+  end
+  
+  def current_playlist
+    playlists.where('started_at >= :time and ended_at < :time', time: Time.zone.now).first
+  end
+  
+  def playlists_for_offset(offset = 0)
+    date = Time.zone.now + offset.days
+    playlists.where(started_at: date.beginning_of_day..date.end_of_day).order('started_at asc')
   end
   
 end
