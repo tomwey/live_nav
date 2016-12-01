@@ -3,6 +3,7 @@ class Channel < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   
   has_and_belongs_to_many :nodes
+  has_many :favorites, as: :favoriteable
   
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }

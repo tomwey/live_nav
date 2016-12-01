@@ -2,6 +2,8 @@ class LiveStream < ActiveRecord::Base
   validates :name, :live_url, :image, presence: true
   mount_uploader :image, ImageUploader
   
+  has_many :favorites, as: :favoriteable
+  
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
   
