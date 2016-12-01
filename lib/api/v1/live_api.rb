@@ -22,11 +22,11 @@ module API
         
         desc "获取直播详情"
         params do
-          requires :sid,   type: Integer, desc: '直播ID'
+          requires :id,   type: Integer, desc: '直播ID'
           optional :token, type: String, desc: '用户Token'
         end
-        get '/:sid' do
-          live = LiveStream.find_by(sid: params[:sid])
+        get '/:id' do
+          live = LiveStream.find_by(sid: params[:id])
           if live.blank?
             return render_error(4004, '该直播不存在')
           end
@@ -37,6 +37,62 @@ module API
           
           render_json(live, API::V1::Entities::LiveStreamDetail, { user: User.find_by(private_token: params[:token]) })
         end # end get
+        
+        desc "收藏直播"
+        params do
+          requires :id, type: Integer, desc: '直播ID'
+          requires :token, type: String, desc: '用户Token'
+        end
+        post :favorite do
+          user = authenticate!
+          
+          live = LiveStream.find_by(sid: params[:id])
+          if live.blank?
+            return render_error(4004, '该直播不存在')
+          end
+          
+          unless live.opened
+            return render_error(3001, '该直播未开放')
+          end
+          
+          if user.favorited?(live)
+            return render_error(5001, '您已经收藏过了')
+          end
+          
+          if user.favorite!(live)
+            render_json_no_data
+          else
+            render_error(5002, '收藏失败')
+          end
+        end # end post
+        
+        desc "取消收藏直播"
+        params do
+          requires :id, type: Integer, desc: '直播ID'
+          requires :token, type: String, desc: '用户Token'
+        end
+        post :unfavorite do
+          user = authenticate!
+          
+          live = LiveStream.find_by(sid: params[:id])
+          if live.blank?
+            return render_error(4004, '该直播不存在')
+          end
+          
+          unless live.opened
+            return render_error(3001, '该直播未开放')
+          end
+          
+          unless user.favorited?(live)
+            return render_error(5001, '您还未收藏，不能取消')
+          end
+          
+          if user.unfavorite!(live)
+            render_json_no_data
+          else
+            render_error(5002, '取消收藏失败')
+          end
+        end # end post
       end # end resource
       
     end

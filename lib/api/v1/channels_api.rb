@@ -31,11 +31,11 @@ module API
         
         desc "获取频道详情"
         params do
-          requires :channel_id, type: Integer, desc: '频道ID'
+          requires :id, type: Integer, desc: '频道ID'
           optional :token, type: String, desc: '用户Token'
         end
-        get '/:channel_id' do
-          @channel = Channel.find_by(chn_id: params[:channel_id])
+        get '/:id' do
+          @channel = Channel.find_by(chn_id: params[:id])
           
           if @channel.blank?
             return render_error(4004, '该频道不存在')
@@ -69,6 +69,65 @@ module API
           
           render_json(@playlists, API::V1::Entities::Playlist)
         end # end get 
+        
+      end # end resource
+      
+      resource :channel, desc: '频道收藏相关接口' do
+        desc "收藏频道"
+        params do
+          requires :id, type: Integer, desc: '频道ID'
+          requires :token, type: String, desc: '用户Token'
+        end
+        post :favorite do
+          user = authenticate!
+          
+          channel = Channel.find_by(chn_id: params[:id])
+          if channel.blank?
+            return render_error(4004, '该频道不存在')
+          end
+          
+          unless channel.opened
+            return render_error(3001, '该频道未开放')
+          end
+          
+          if user.favorited?(channel)
+            return render_error(5001, '您已经收藏过了')
+          end
+          
+          if user.favorite!(channel)
+            render_json_no_data
+          else
+            render_error(5002, '收藏失败')
+          end
+        end # end post
+        
+        desc "取消收藏频道"
+        params do
+          requires :id, type: Integer, desc: '频道ID'
+          requires :token, type: String, desc: '用户Token'
+        end
+        post :unfavorite do
+          user = authenticate!
+          
+          channel = Channel.find_by(chn_id: params[:id])
+          if channel.blank?
+            return render_error(4004, '该频道不存在')
+          end
+          
+          unless channel.opened
+            return render_error(3001, '该频道未开放')
+          end
+          
+          unless user.favorited?(channel)
+            return render_error(5001, '您还未收藏，不能取消')
+          end
+          
+          if user.favorite!(channel)
+            render_json_no_data
+          else
+            render_error(5002, '收藏失败')
+          end
+        end # end post
         
       end # end resource
       

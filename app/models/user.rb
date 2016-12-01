@@ -54,10 +54,22 @@ class User < ActiveRecord::Base
     Appointment.create!(playlist_id: playlist.id, user_id: self.id)
   end
   
+  def cancel_appoint!(playlist)
+    return false if playlist.blank?
+    
+    Appointment.where(playlist_id: playlist.id, user_id: self.id).delete_all
+  end
+  
   def favorite!(favoriteable)
     return false if favoriteable.blank?
     
     Favorite.create!(favoriteable_id: favoriteable.id, favoriteable_type: favoriteable.class, user_id: self.id)
+  end
+  
+  def unfavorite!(favoriteable)
+    return false if favoriteable.blank?
+    
+    Favorite.where(favoriteable_id: favoriteable.id, favoriteable_type: favoriteable.class, user_id: self.id).delete_all
   end
   
   def favorited?(favoriteable)

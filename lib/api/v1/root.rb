@@ -25,6 +25,8 @@ module API
       mount API::V1::ChannelsAPI
       mount API::V1::ChannelNodesAPI
       mount API::V1::LiveAPI
+      mount API::V1::AppointmentsAPI
+      mount API::V1::FavoritesAPI
       
       # 
       # 配合trix文本编辑器
