@@ -1,7 +1,7 @@
 class Playlist < ActiveRecord::Base
   belongs_to :channel
   
-  validates :name, :started_at, :ended_at, presence: true
+  validates :name, :started_at, :ended_at, :channel_id, presence: true
   
   after_save :set_pl_id_if_needed
   def set_pl_id_if_needed
