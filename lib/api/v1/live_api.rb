@@ -19,6 +19,24 @@ module API
           
           render_json(@streams, API::V1::Entities::LiveStream)
         end # end get list
+        
+        desc "获取直播详情"
+        params do
+          requires :sid,   type: Integer, desc: '直播ID'
+          optional :token, type: String, desc: '用户Token'
+        end
+        get '/:sid' do
+          live = LiveStream.find_by(sid: params[:sid])
+          if live.blank?
+            return render_error(4004, '该直播不存在')
+          end
+          
+          unless live.opened
+            return render_error(3001, '该直播未开放')
+          end
+          
+          render_json(live, API::V1::Entities::LiveStreamDetail, { user: User.find_by(private_token: params[:token]) })
+        end # end get
       end # end resource
       
     end

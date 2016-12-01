@@ -158,6 +158,22 @@ module API
         end
       end
       
+      class LiveStreamDetail < LiveStream
+        expose :favorited do |model, opts|
+          opts = opts[:opts]
+          if opts
+            user = opts[:user]
+            if user
+              user.favorited?(model)
+            else
+              false
+            end
+          else
+            false
+          end
+        end
+      end
+      
       # 订单
       class Order < Base
         expose :order_no
