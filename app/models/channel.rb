@@ -16,4 +16,8 @@ class Channel < ActiveRecord::Base
     end
   end
   
+  def add_view_count
+    self.class.increment_counter(:view_count, self.id)
+  end
+  
 end

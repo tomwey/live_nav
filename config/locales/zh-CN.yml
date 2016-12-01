@@ -26,6 +26,7 @@
       common_config: '公共配置'
       node: '频道节点'
       live_stream: '直播'
+      playlist: '节目'
     attributes:
       user:
         mobile: "手机"
@@ -101,6 +102,13 @@
         live_url: '直播地址'
         sort: '显示顺序'
         opened: '是否开启'
+      playlist:
+        name: '节目名'
+        started_at: '开始时间'
+        ended_at: '结束时间'
+        pl_id: '节目ID'
+        channel_id: '所属频道'
+        vod_url: '回看地址'
         
     errors:
       models:
