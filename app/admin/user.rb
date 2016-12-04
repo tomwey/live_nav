@@ -15,7 +15,7 @@ menu parent: 'user'
 #   permitted
 # end
 
-actions :index, :edit, :update
+actions :index, :edit, :update, :destroy
 
 filter :nickname
 filter :mobile
@@ -42,15 +42,15 @@ index do
   column 'Token', sortable: false do |u|
     u.private_token
   end
-  column '益豆' do |u|
-    u.bean
-  end
-  column '余额' do |u|
-    u.balance
-  end
-  column '剩余网时' do |u|
-    "#{u.wifi_status.try(:wifi_length)}分钟"
-  end
+  # column '益豆' do |u|
+  #   u.bean
+  # end
+  # column '余额' do |u|
+  #   u.balance
+  # end
+  # column '剩余网时' do |u|
+  #   "#{u.wifi_status.try(:wifi_length)}分钟"
+  # end
   column :verified, sortable: false
   column :created_at
   
@@ -60,7 +60,8 @@ index do
     else
       item "启用", unblock_cpanel_user_path(u), method: :put
     end
-    item " 充值", edit_cpanel_user_path(u)
+    # item " 充值", edit_cpanel_user_path(u)
+    item "删除", cpanel_user_path(u), method: :delete, data: { confirm: '你确定吗？' }
   end
 end
 
