@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
       self.save!
       
       # 生成二维码
-      CreateQrcodeJob.perform_later(self)
+      # CreateQrcodeJob.perform_later(self)
     end
   end
   
