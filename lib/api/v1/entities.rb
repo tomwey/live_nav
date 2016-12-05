@@ -81,6 +81,19 @@ module API
         end
       end
       
+      # 我的收藏
+      class Favorite < Base
+        expose :name do |model, opts|
+          model.favoriteable.try(:name) || ''
+        end
+        expose :view_count do |model, opts|
+          model.favoriteable.try(:view_count)
+        end
+        expose :image do |model, opts|
+          model.favoriteable.image.blank? ? '' : model.favoriteable.image.url(:thumb)
+        end
+      end
+      
       # 频道节目
       class Playlist < Base
         expose :pl_id, as: :id
