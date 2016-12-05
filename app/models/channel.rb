@@ -23,7 +23,7 @@ class Channel < ActiveRecord::Base
   end
   
   def current_playlist
-    playlists.where('started_at >= :time and ended_at < :time', time: Time.zone.now).first
+    @current_playlist ||= playlists.where('started_at >= :time and ended_at < :time', time: Time.zone.now).first
   end
   
   def playlists_for_offset(offset = 0)

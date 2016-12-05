@@ -11,4 +11,16 @@ class Playlist < ActiveRecord::Base
     end
   end
   
+  def state
+    now = Time.zone.now
+    
+    if self.ended_at < now
+      -1 # 回看
+    elsif self.started_at > now
+      1  # 预告，预约
+    else
+      0  # 正在直播 
+    end
+  end
+  
 end

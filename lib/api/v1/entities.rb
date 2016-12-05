@@ -141,17 +141,10 @@ module API
             false
           end
         end
-        expose :current do |model, opts|
-          if opts && opts[:time]
-            if opts[:time] >= model.started_at and opts[:time] < model.ended_at
-              true
-            else
-              false
-            end
-          else
-            false
-          end
+        expose :state do |model,opts|
+          model.state
         end
+        
       end
       
       class ChannelDetail < Channel
