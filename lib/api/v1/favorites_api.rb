@@ -7,13 +7,28 @@ module API
       resource :favorites, desc: '收藏相关接口' do
         desc "我的收藏"
         params do
-          requires :token, type: String, desc: '用户Token'
+          requires :token, type: String,  desc: '用户Token'
+          optional :type,  type: Integer, desc: '收藏的类型，值为1或者2，1表示电视，2表示直播，如果不传该参数默认为1'
           use :pagination
         end
         get do
           user = authenticate!
           
-          @favorites = Favorite.where(user_id: user.id).order('id desc')
+          type = (params[:type] || 1).to_i
+          
+          unless %w(1 2).include?(type.to_s)
+            return render_error(-1, '不正确的type参数值')
+          end
+          
+          if type == 1
+            klass = 'Channel'
+          elsif type == 2
+            klass = 'LiveStream'
+          else
+            return render_error(-2, '非法操作')
+          end
+          
+          @favorites = Favorite.where(user_id: user.id, favoriteable_type: klass).order('id desc')
           
           if params[:page]
             @favorites = @favorites.paginate page: params[:page], per_page: page_size

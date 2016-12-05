@@ -18,6 +18,10 @@ class Channel < ActiveRecord::Base
     end
   end
   
+  def media_id
+    self.chn_id
+  end
+  
   def add_view_count
     self.class.increment_counter(:view_count, self.id)
   end

@@ -83,6 +83,9 @@ module API
       
       # 我的收藏
       class Favorite < Base
+        expose :media_id do |model, opts|
+          model.favoriteable.media_id
+        end
         expose :name do |model, opts|
           model.favoriteable.try(:name) || ''
         end
