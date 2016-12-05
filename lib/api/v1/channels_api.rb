@@ -122,7 +122,7 @@ module API
             return render_error(5001, '您还未收藏，不能取消')
           end
           
-          if user.favorite!(channel)
+          if user.unfavorite!(channel)
             render_json_no_data
           else
             render_error(5002, '收藏失败')

@@ -89,8 +89,36 @@ module API
         expose :view_count do |model, opts|
           model.favoriteable.try(:view_count)
         end
+        expose :live_url do |model, opts|
+          model.favoriteable.live_url
+        end
         expose :image do |model, opts|
           model.favoriteable.image.blank? ? '' : model.favoriteable.image.url(:thumb)
+        end
+        expose :created_at, as: :time, format_with: :chinese_datetime
+      end
+      
+      # 预约
+      class Appointment < Base
+        expose :playlist_name do |model, opts|
+          model.playlist.try(:name) || ''
+        end
+        expose :channel_name do |model, opts|
+          if model.playlist.channel
+            model.playlist.channel.try(:name) || ''
+          else
+            ''
+          end
+        end
+        expose :start_time do |model, opts|
+          model.playlist.started_at.strftime('%Y-%m-%d %H:%M')
+        end
+        expose :end_time do |model, opts|
+          if model.playlist.ended_at
+            model.playlist.ended_at.strftime('%Y-%m-%d %H:%M')
+          else
+            ''
+          end
         end
       end
       
