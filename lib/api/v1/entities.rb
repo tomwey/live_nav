@@ -79,6 +79,7 @@ module API
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
         end
+        expose :bili_topic, as: :topic
       end
       
       # 我的收藏
@@ -97,6 +98,9 @@ module API
         end
         expose :image do |model, opts|
           model.favoriteable.image.blank? ? '' : model.favoriteable.image.url(:thumb)
+        end
+        expose :topic do |model, opts|
+          model.favoriteable.bili_topic
         end
         expose :created_at, as: :time, format_with: :chinese_datetime
       end
@@ -184,6 +188,21 @@ module API
         end
       end
       
+      # 弹幕
+      class Bilibili < Base
+        expose :content
+        expose :author_id do |model, opts|
+          model.user.uid
+        end
+        expose :author_name do |model, opts|
+          model.user.nickname || model.user.hack_mobile
+        end
+        expose :author_avatar do |model, opts|
+          model.user.avatar.blank? ? "" : model.user.avatar_url(:large)
+        end
+        expose :created_at, as: :time, format_with: :chinese_datetime
+      end
+      
       # 直播
       class LiveStream < Base
         expose :sid, as: :id
@@ -193,6 +212,7 @@ module API
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
         end
+        expose :bili_topic, as: :topic
       end
       
       class LiveStreamDetail < LiveStream

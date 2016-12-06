@@ -27,6 +27,7 @@ module API
       mount API::V1::LiveAPI
       mount API::V1::AppointmentsAPI
       mount API::V1::FavoritesAPI
+      mount API::V1::BilibilisAPI
       
       # 
       # 配合trix文本编辑器
