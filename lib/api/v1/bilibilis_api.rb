@@ -13,8 +13,19 @@ module API
         end
         get :latest do
           total = params[:size] || 30
-          type = params[:media_type] == 1 ? 'Channel' : 'LiveStream'
-          @bibis = Bilibili.where(bilibiliable_type: type, bilibiliable_id: params[:media_id]).order('id desc').limit(total.to_i)
+          # type = params[:media_type] == 1 ? 'Channel' : 'LiveStream'
+          
+          if params[:media_type] == 1
+            ownerable = Channel.find_by(chn_id: params[:media_id])
+          else
+            ownerable = LiveStream.find_by(sid: params[:media_id])
+          end
+          
+          if ownerable.blank?
+            return render_error(4004, '未找到数据')
+          end
+          
+          @bibis = Bilibili.where(bilibiliable_type: ownerable.class, bilibiliable_id: ownerable.id).order('id desc').limit(total.to_i)
           render_json(@bibis, API::V1::Entities::Bilibili)
         end # end get
         
@@ -25,8 +36,19 @@ module API
           use :pagination
         end
         get do
-          type = params[:media_type] == 1 ? 'Channel' : 'LiveStream'
-          @bibis = Bilibili.where(bilibiliable_type: type, bilibiliable_id: params[:media_id]).order('id desc')
+          # type = params[:media_type] == 1 ? 'Channel' : 'LiveStream'
+          
+          if params[:media_type] == 1
+            ownerable = Channel.find_by(chn_id: params[:media_id])
+          else
+            ownerable = LiveStream.find_by(sid: params[:media_id])
+          end
+          
+          if ownerable.blank?
+            return render_error(4004, '未找到数据')
+          end
+          
+          @bibis = Bilibili.where(bilibiliable_type: ownerable.class, bilibiliable_id: ownerable.id).order('id desc')
           @bibis = @bibis.paginate(page: params[:page], per_page: page_size) if params[:page]
           render_json(@bibis, API::V1::Entities::Bilibili)
         end # end get
