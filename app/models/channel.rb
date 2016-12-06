@@ -4,6 +4,7 @@ class Channel < ActiveRecord::Base
   
   has_and_belongs_to_many :nodes
   has_many :favorites, as: :favoriteable
+  has_many :bilibilis, as: :bilibiliable
   has_many :playlists, dependent: :destroy
   
   scope :opened, -> { where(opened: true) }
@@ -20,6 +21,10 @@ class Channel < ActiveRecord::Base
   
   def media_id
     self.chn_id
+  end
+  
+  def bili_topic
+    Digest::MD5.hexdigest("C:#{self.chn_id}")
   end
   
   def add_view_count

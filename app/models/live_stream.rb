@@ -3,6 +3,7 @@ class LiveStream < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   
   has_many :favorites, as: :favoriteable
+  has_many :bilibilis, as: :bilibiliable
   
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
@@ -14,6 +15,10 @@ class LiveStream < ActiveRecord::Base
       self.sid = 10000 + self.id
       self.save!
     end
+  end
+  
+  def bili_topic
+    Digest::MD5.hexdigest("LS:#{self.sid}")
   end
   
   def media_id
