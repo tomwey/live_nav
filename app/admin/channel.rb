@@ -32,8 +32,18 @@ index do
   column :opened
   column :created_at
   
-  actions
+  actions defaults: false do |channel|
+    item '查看', cpanel_channel_path(channel)
+    item '编辑', edit_cpanel_channel_path(channel)
+    item '删除', cpanel_channel_path(channel), method: :delete, data: { confirm: '确定吗？' }
+    item '导入节目', add_playlists_cpanel_channel_path(channel), method: :post
+  end
   
+end
+
+member_action :add_playlists, method: :post do
+  resource.add_playlists!
+  redirect_to collection_path, notice: "导入成功"
 end
 
 form do |f|

@@ -22,6 +22,10 @@ class Channel < ActiveRecord::Base
     self.chn_id
   end
   
+  def add_playlists!
+    PlaylistsData.import(self.id)
+  end
+  
   def add_view_count
     self.class.increment_counter(:view_count, self.id)
   end
