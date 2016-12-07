@@ -8,6 +8,7 @@ set :scm, :git
 set :repo_url, "git@github.com:tomwey/#{fetch(:application)}.git"
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+
 set :pty,  false
 
 set :rbenv_type, :user

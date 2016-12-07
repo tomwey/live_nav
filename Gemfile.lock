@@ -116,6 +116,7 @@ GEM
     carrierwave-qiniu (0.2.3)
       carrierwave
       qiniu (~> 6.5.1)
+    chronic (0.10.2)
     coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -292,8 +293,6 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     ruby-hmac (0.4.0)
-    rufus-scheduler (3.3.1)
-      tzinfo
     sass (3.4.22)
     sass-rails (5.0.5)
       railties (>= 4.0.0, < 6)
@@ -310,10 +309,6 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
       sinatra (>= 1.4.7)
-    sidekiq-cron (0.4.3)
-      redis-namespace (>= 1.5.2)
-      rufus-scheduler (>= 2.0.24)
-      sidekiq (>= 4.0.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -353,6 +348,8 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     will_paginate (3.1.0)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
@@ -405,7 +402,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   settingslogic
   sidekiq
-  sidekiq-cron (~> 0.4.0)
   spring
   sprockets
   state_machine
@@ -413,6 +409,7 @@ DEPENDENCIES
   uglifier
   unicorn
   unicorn-worker-killer
+  whenever
   will_paginate
   will_paginate-bootstrap
 

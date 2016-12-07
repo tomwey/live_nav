@@ -5,8 +5,8 @@ class CheckLiveJob < ActiveJob::Base
   queue_as :scheduled_jobs
   
   def perform(*args)
-    puts 'start...'
-    LiveStream.all.each do |ls|
+    # puts 'start...'
+    LiveStream.opened.each do |ls|
       room_id = ls.source_room_id
       
       if not room_id.blank?
@@ -19,13 +19,15 @@ class CheckLiveJob < ActiveJob::Base
       
         RestClient.get url, { aid: 'hbtv', time: time, auth: auth, accept: :json } do |resp|
           result = JSON.parse(resp)
-          puts result
+          # puts result
           if result["error"] == 0
+            puts '直播中'
             # 直播中
             ls.live_url = result["data"]["live_url"]
             ls.online = true
             ls.save!
           elsif result["error"] == 1010
+            puts '未直播'
             # 未直播
             ls.online = false
             ls.save!
@@ -34,7 +36,7 @@ class CheckLiveJob < ActiveJob::Base
           # puts '---------------------------------------------'
         end
       end
-      
+     
     end
   end
   

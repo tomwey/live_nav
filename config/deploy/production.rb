@@ -17,6 +17,8 @@ set :server_name, "deyiwifi.com"
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # set :server_name, "www.shuiguoshe.com shuiguoshe.com"
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server definition into the

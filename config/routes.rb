@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   
   # 队列后台管理
   require 'sidekiq/web'
-  require 'sidekiq/cron/web'
+  # require 'sidekiq/cron/web'
   authenticate :admin do
     mount Sidekiq::Web => 'sidekiq'
   end
