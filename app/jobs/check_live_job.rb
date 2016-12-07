@@ -4,8 +4,13 @@ require 'digest'
 class CheckLiveJob < ActiveJob::Base
   queue_as :scheduled_jobs
   
+  self.logger = Sidekiq::Logging.logger
+  
   def perform(*args)
     # puts 'start...'
+    
+    logger.debug 'start perform...'
+    
     LiveStream.opened.each do |ls|
       room_id = ls.source_room_id
       
@@ -38,6 +43,8 @@ class CheckLiveJob < ActiveJob::Base
       end
      
     end
+    
+    logger.debug 'stop perform...'
   end
   
 end
