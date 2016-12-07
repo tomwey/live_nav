@@ -53,6 +53,9 @@ gem 'redis-objects'
 gem 'sidekiq'
 # gem 'sinatra', :require => nil
 
+# 周期执行任务
+gem "sidekiq-cron", "~> 0.4.0"
+
 # 后台管理系统
 gem 'activeadmin', github: 'activeadmin'
 # gem 'activeadmin', github: 'gregbell/active_admin', branch: '0-6-stable'
