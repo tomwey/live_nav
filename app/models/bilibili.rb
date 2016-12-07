@@ -6,6 +6,7 @@ class Bilibili < ActiveRecord::Base
   
   after_create :push_message
   def push_message
-    SendBiliJob.perform_later(self.content, self.bilibiliable.bili_topic)
+    # SendBiliJob.perform_later(self.content, self.bilibiliable.bili_topic)
+    SendBiliJob.perform_later(self.id)
   end
 end
