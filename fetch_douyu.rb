@@ -12,8 +12,8 @@ module Douyu
       puts url
       
       RestClient.get url, { aid: 'hbtv', time: time, auth: auth, accept: :json } do |resp|
-        puts resp
-        puts '---------------------------------------------'
+        puts JSON.parse(resp)
+        # puts '---------------------------------------------'
       end
       
     end
@@ -36,9 +36,9 @@ module Douyu
   end
 end
 
-# %w(321987 265593 683954 1339207 1235257 479171 1243456 8303 966276 542173).each do |room_id|
-#   Douyu::Room.fetch(room_id)
-# end
+%w(321987 265593 683954 1339207 1235257 479171 1243456 8303 966276 542173).each do |room_id|
+  Douyu::Room.fetch_room_info(room_id)
+end
 
 # Douyu::Room.fetch_room_list
-Douyu::Room.fetch_room_info(442078)
+# Douyu::Room.fetch_room_info(442078)

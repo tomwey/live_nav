@@ -102,6 +102,8 @@
         live_url: '直播地址'
         sort: '显示顺序'
         opened: '是否开启'
+        source_name: '直播来源'
+        source_room_id: '直播房间ID'
       playlist:
         name: '节目名'
         started_at: '开始时间'

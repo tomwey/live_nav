@@ -102,6 +102,9 @@ module API
         expose :topic do |model, opts|
           model.favoriteable.bili_topic
         end
+        expose :living do |model, opts|
+          model.favoriteable.online
+        end
         expose :created_at, as: :time, format_with: :chinese_datetime
       end
       
@@ -212,6 +215,7 @@ module API
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
         end
+        expose :online, as: :living
         expose :bili_topic, as: :topic
       end
       

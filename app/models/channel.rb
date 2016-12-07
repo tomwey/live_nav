@@ -27,6 +27,10 @@ class Channel < ActiveRecord::Base
     PlaylistsData.import(self.id)
   end
   
+  def online
+    true
+  end
+  
   def bili_topic
     Digest::MD5.hexdigest("C:#{self.chn_id}")
   end

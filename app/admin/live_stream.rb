@@ -3,7 +3,7 @@ ActiveAdmin.register LiveStream do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-permit_params :name, :intro, :image, :live_url, :sort, :opened
+permit_params :name, :intro, :image, :live_url, :sort, :opened, :source_name, :source_room_id
 #
 # or
 #
@@ -18,7 +18,12 @@ index do
       image_tag ls.image.url(:small)
     end
   end
-  column :intro, sortable: false
+  column '当前直播状态', sortable: false do |ls|
+    ls.online ? '直播中' : '未直播'
+  end
+  column :source_name, sortable: false
+  column :source_room_id, sortable: false
+  # column :intro, sortable: false
   column :sort
   column :opened
   column :created_at
@@ -32,6 +37,8 @@ form do |f|
     f.input :name
     f.input :image
     f.input :live_url
+    f.input :source_name, placeholder: '直播来源，例如斗鱼，花椒等等'
+    f.input :source_room_id, placeholder: '直播平台的房间ID，例如：32132'
     f.input :intro
     f.input :sort
     f.input :opened, as: :boolean
