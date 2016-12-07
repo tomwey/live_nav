@@ -79,6 +79,7 @@ module API
         expose :image do |model, opts|
           model.image.blank? ? '' : model.image.url(:thumb)
         end
+        expose :online, as: :living
         expose :bili_topic, as: :topic
       end
       
