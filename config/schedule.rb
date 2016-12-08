@@ -20,7 +20,7 @@
 
 every 5.minute do
   # command "echo 'this is test'"
-  runner "CheckLiveJob.perform_later"
+  runner "DouyuCheck.update_state"
   # rake "some:great:rake:task"
 end
 
