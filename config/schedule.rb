@@ -17,8 +17,11 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
+# set :environment, :development
 
-every 5.minute do
+# set :environment, :development
+
+every 1.minute do
   # command "echo 'this is test'"
   runner "DouyuCheck.update_state"
   # rake "some:great:rake:task"
