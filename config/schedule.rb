@@ -24,9 +24,12 @@ set :output, "/data/www/apps/live_nav_production/current/log/cron.log"
 
 # set :environment, :development
 
+job_type :custom_runner,  
+  "cd :path && bundle exec rails runner -e :environment ':task' :output"
+
 every 1.minute do
   # command "echo 'this is test'"
-  runner "DouyuCheck.update_state"
+  custom_runner "DouyuCheck.update_state"
   # rake "some:great:rake:task"
 end
 
