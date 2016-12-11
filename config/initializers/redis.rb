@@ -16,12 +16,12 @@ Sidekiq.configure_server do |config|
   config.redis = { namespace: 'sidekiq', url: sidekiq_url }
   
   # 添加cron jobs
-  # schedule_file = "config/schedule.yml"
-  # # puts 'sssssss'
-  # if File.exists?(schedule_file) && Sidekiq.server?
-  #   # puts 'ddddddd'
-  #   Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
-  # end
+  schedule_file = "config/schedule.yml"
+  # puts 'sssssss'
+  if File.exists?(schedule_file) && Sidekiq.server?
+    # puts 'ddddddd'
+    Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
+  end
 end
 Sidekiq.configure_client do |config|
   config.redis = { namespace: 'sidekiq', url: sidekiq_url }

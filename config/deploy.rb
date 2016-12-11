@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.6.1'
+lock '3.7.0'
 
 set :application, 'live_nav'
 set :deploy_user, "deployer"
