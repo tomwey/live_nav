@@ -55,7 +55,7 @@ gem 'sidekiq'
 
 # 周期执行任务
 # gem "sidekiq-cron", "~> 0.4.0"
-gem 'whenever', :require => false
+# gem 'whenever', :require => false
 
 # 后台管理系统
 gem 'activeadmin', github: 'activeadmin'

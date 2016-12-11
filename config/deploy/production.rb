@@ -17,8 +17,8 @@ set :server_name, "deyiwifi.com"
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # set :server_name, "www.shuiguoshe.com shuiguoshe.com"
 
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-set :whenever_roles, ->{ [:web, :app]}
+# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_roles, ->{ [:web, :app]}
 
 # Extended Server Syntax
 # ======================
