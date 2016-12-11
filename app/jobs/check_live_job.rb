@@ -4,12 +4,9 @@ require 'digest'
 class CheckLiveJob < ActiveJob::Base
   queue_as :scheduled_jobs
   
-  # self.logger = Sidekiq::Logging.logger
-  
   def perform(*args)
-    # puts 'start...'
     
-    # logger.debug 'start perform...'
+    puts 'start ...'
     
     LiveStream.opened.each do |ls|
       room_id = ls.source_room_id
@@ -26,13 +23,13 @@ class CheckLiveJob < ActiveJob::Base
           result = JSON.parse(resp)
           # puts result
           if result["error"] == 0
-            puts '直播中'
+            # puts '直播中'
             # 直播中
             ls.live_url = result["data"]["live_url"]
             ls.online = true
             ls.save!
           elsif result["error"] == 1010
-            puts '未直播'
+            # puts '未直播'
             # 未直播
             ls.online = false
             ls.save!
@@ -43,8 +40,6 @@ class CheckLiveJob < ActiveJob::Base
       end
      
     end
-    
-    # logger.debug 'stop perform...'
   end
   
 end

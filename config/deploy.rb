@@ -4,7 +4,7 @@ lock '3.7.0'
 set :application, 'live_nav'
 set :deploy_user, "deployer"
 
-set :scm, :git
+# set :scm, :git
 set :repo_url, "git@github.com:tomwey/#{fetch(:application)}.git"
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
