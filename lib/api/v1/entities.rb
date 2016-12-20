@@ -88,6 +88,9 @@ module API
         expose :media_id do |model, opts|
           model.favoriteable.media_id
         end
+        expose :media_type do |model, opts|
+          model.favoriteable_type == 'Channel' ? 1 : 2
+        end
         expose :name do |model, opts|
           model.favoriteable.try(:name) || ''
         end
