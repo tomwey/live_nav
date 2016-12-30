@@ -26,6 +26,7 @@
       common_config: '公共配置'
       node: '频道节点'
       live_stream: '直播'
+      video: '视频'
       playlist: '节目'
       play_stat: '播放统计'
     attributes:
@@ -105,6 +106,17 @@
         opened: '是否开启'
         source_name: '直播来源'
         source_room_id: '直播房间ID'
+      video:
+        vid: '视频ID'
+        name: '视频名称'
+        image: '视频封面图'
+        intro: '视频简介'
+        live_url: '播放地址'
+        sort: '显示顺序'
+        opened: '是否开启'
+        source_name: '视频来源'
+        source_id: '视频来源ID'
+        view_count: '观看数'
       play_stat:
         udid: '设备ID'
         platform: '设备系统'

@@ -239,6 +239,35 @@ module API
         end
       end
       
+      # 视频
+      class Video < Base
+        expose :vid, as: :id
+        expose :name, :live_url
+        expose :view_count
+        # expose :intro, format_with: :null
+        expose :image do |model, opts|
+          model.image.blank? ? '' : model.image.url(:thumb)
+        end
+        # expose :online, as: :living
+        expose :bili_topic, as: :topic
+      end
+      
+      class VideoDetail < Video
+        expose :favorited do |model, opts|
+          opts = opts[:opts]
+          if opts
+            user = opts[:user]
+            if user
+              user.favorited?(model)
+            else
+              false
+            end
+          else
+            false
+          end
+        end
+      end
+      
       # 订单
       class Order < Base
         expose :order_no

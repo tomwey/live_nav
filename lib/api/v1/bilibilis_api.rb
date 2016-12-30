@@ -17,8 +17,12 @@ module API
           
           if params[:media_type] == 1
             ownerable = Channel.find_by(chn_id: params[:media_id])
-          else
+          elsif params[:media_type] == 2
             ownerable = LiveStream.find_by(sid: params[:media_id])
+          elsif params[:media_type] == 3
+            ownerable = Video.find_by(vid: params[:media_id])
+          else
+            ownerable = nil
           end
           
           if ownerable.blank?
@@ -38,10 +42,19 @@ module API
         get do
           # type = params[:media_type] == 1 ? 'Channel' : 'LiveStream'
           
+          # if params[:media_type] == 1
+          #   ownerable = Channel.find_by(chn_id: params[:media_id])
+          # else
+          #   ownerable = LiveStream.find_by(sid: params[:media_id])
+          # end
           if params[:media_type] == 1
             ownerable = Channel.find_by(chn_id: params[:media_id])
-          else
+          elsif params[:media_type] == 2
             ownerable = LiveStream.find_by(sid: params[:media_id])
+          elsif params[:media_type] == 3
+            ownerable = Video.find_by(vid: params[:media_id])
+          else
+            ownerable = nil
           end
           
           if ownerable.blank?
@@ -63,10 +76,19 @@ module API
         post :send do
           user = authenticate!
           
+          # if params[:media_type] == 1
+          #   ownerable = Channel.find_by(chn_id: params[:media_id])
+          # else
+          #   ownerable = LiveStream.find_by(sid: params[:media_id])
+          # end
           if params[:media_type] == 1
             ownerable = Channel.find_by(chn_id: params[:media_id])
-          else
+          elsif params[:media_type] == 2
             ownerable = LiveStream.find_by(sid: params[:media_id])
+          elsif params[:media_type] == 3
+            ownerable = Video.find_by(vid: params[:media_id])
+          else
+            ownerable = nil
           end
           
           if ownerable.blank?

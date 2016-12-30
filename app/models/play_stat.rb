@@ -8,7 +8,7 @@ class PlayStat < ActiveRecord::Base
       LiveStream.find_by(sid: playable_id)
     elsif playable_type.to_s == '3'
       # 视频
-      Video.find_by(vod_id: playable_id)
+      Video.find_by(vid: playable_id)
     else
       nil
     end
