@@ -28,6 +28,7 @@ module API
       mount API::V1::AppointmentsAPI
       mount API::V1::FavoritesAPI
       mount API::V1::BilibilisAPI
+      mount API::V1::PlayStatsAPI
       
       # 
       # 配合trix文本编辑器

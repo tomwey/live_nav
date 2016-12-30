@@ -27,6 +27,7 @@
       node: '频道节点'
       live_stream: '直播'
       playlist: '节目'
+      play_stat: '播放统计'
     attributes:
       user:
         mobile: "手机"
@@ -104,6 +105,16 @@
         opened: '是否开启'
         source_name: '直播来源'
         source_room_id: '直播房间ID'
+      play_stat:
+        udid: '设备ID'
+        platform: '设备系统'
+        device_model: '设备名'
+        lang_country: '国家语言'
+        os_version: '系统版本'
+        app_version: 'App版本'
+        is_broken: '是否越狱'
+        network_type: '网络类型'
+        screen_size: '屏幕分辨率'
       playlist:
         name: '节目名'
         started_at: '开始时间'
