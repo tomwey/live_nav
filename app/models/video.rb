@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  validates :name, :image, :live_url
+  validates :name, :image, :live_url, presence: true
   
   has_many :favorites, as: :favoriteable
   has_many :bilibilis, as: :bilibiliable
