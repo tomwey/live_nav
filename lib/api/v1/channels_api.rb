@@ -129,6 +129,38 @@ module API
           end
         end # end post
         
+        desc "上传频道直播截图"
+        params do
+          requires :id, type: Integer, desc: '频道ID'
+          requires :image, type: Rack::Multipart::UploadedFile, desc: "截图图片"
+        end
+        post :upframe do
+          channel = Channel.find_by(chn_id: params[:id])
+          if channel.blank?
+            return render_error(4004, '该频道不存在')
+          end
+          
+          unless channel.opened
+            return render_error(3001, '该频道未开放')
+          end
+          
+          temp_ss = channel.temp_screenshot
+          if temp_ss.blank?
+            temp_ss = TempScreenshot.create!(image: params[:image], upload_at: Time.zone.now, channel_id: channel.id)
+          else
+            if params[:image].blank?
+              return render_error(-1, '图片不正确')
+            else
+              temp_ss.image = params[:image]
+              temp_ss.upload_at = Time.zone.now
+              temp_ss.save!
+            end
+          end
+          
+          render_json_no_data
+          
+        end # end post
+        
       end # end resource
       
     end

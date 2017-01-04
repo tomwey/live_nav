@@ -77,8 +77,10 @@ module API
           model.current_playlist.try(:name) || '该频道正在播放的节目名称'
         end
         expose :image do |model, opts|
-          model.image.blank? ? '' : model.image.url(:thumb)
+          # model.image.blank? ? '' : model.image.url(:thumb)
+          model.real_image
         end
+        # expose :real_image, as: :image
         expose :online, as: :living
         expose :bili_topic, as: :topic
       end
@@ -101,7 +103,8 @@ module API
           model.favoriteable.live_url
         end
         expose :image do |model, opts|
-          model.favoriteable.image.blank? ? '' : model.favoriteable.image.url(:thumb)
+          # model.favoriteable.image.blank? ? '' : model.favoriteable.image.url(:thumb)
+          model.favoriteable.real_image
         end
         expose :topic do |model, opts|
           model.favoriteable.bili_topic
@@ -217,7 +220,8 @@ module API
         expose :view_count
         # expose :intro, format_with: :null
         expose :image do |model, opts|
-          model.image.blank? ? '' : model.image.url(:thumb)
+          # model.image.blank? ? '' : model.image.url(:thumb)
+          model.real_image
         end
         expose :online, as: :living
         expose :bili_topic, as: :topic
@@ -246,7 +250,8 @@ module API
         expose :view_count
         # expose :intro, format_with: :null
         expose :image do |model, opts|
-          model.image.blank? ? '' : model.image.url(:thumb)
+          # model.image.blank? ? '' : model.image.url(:thumb)
+          model.real_image
         end
         # expose :online, as: :living
         expose :bili_topic, as: :topic

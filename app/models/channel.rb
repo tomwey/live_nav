@@ -7,6 +7,9 @@ class Channel < ActiveRecord::Base
   has_many :bilibilis, as: :bilibiliable
   has_many :playlists, dependent: :destroy
   
+  # 每隔一段时间上传一次当前频道正在播放的节目内容截屏
+  has_one :temp_screenshot, dependent: :destroy
+  
   scope :opened, -> { where(opened: true) }
   scope :sorted, -> { order('sort desc, id desc') }
   
@@ -16,6 +19,18 @@ class Channel < ActiveRecord::Base
     if self.chn_id.blank?
       self.chn_id = 11000 + self.id
       self.save!
+    end
+  end
+  
+  def real_image
+    if temp_screenshot && not temp_screenshot.image.blank?
+      temp_screenshot.image.url(:thumb)
+    else
+      if image.blank?
+        ''
+      else
+        image.url(:thumb)
+      end
     end
   end
   

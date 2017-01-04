@@ -21,6 +21,14 @@ class LiveStream < ActiveRecord::Base
     Digest::MD5.hexdigest("LS:#{self.sid}")
   end
   
+  def real_image
+    if image.blank?
+      ''
+    else
+      image.url(:thumb)
+    end
+  end
+  
   def media_id
     self.sid
   end
