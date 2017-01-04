@@ -23,7 +23,7 @@ class Channel < ActiveRecord::Base
   end
   
   def real_image
-    if temp_screenshot && not temp_screenshot.image.blank?
+    if temp_screenshot && temp_screenshot.image
       temp_screenshot.image.url(:thumb)
     else
       if image.blank?
