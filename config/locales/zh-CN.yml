@@ -96,6 +96,7 @@
         sort: '显示顺序'
         opened: '是否开启'
         nodes: '所属节点'
+        py_name: '拼音名称'
       live_stream:
         sid: '直播流ID'
         name: '直播名称'

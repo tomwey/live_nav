@@ -3,7 +3,7 @@ ActiveAdmin.register Channel do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-permit_params :name, :intro, :image, :live_url, :sort, :opened, { node_ids: [] }
+permit_params :name, :intro, :image, :live_url, :py_name, :sort, :opened, { node_ids: [] }
 #
 # or
 #
@@ -49,6 +49,7 @@ end
 form do |f|
   f.inputs do
     f.input :name
+    f.input :py_name
     f.input :image
     f.input :live_url
     f.input :nodes, as: :check_boxes

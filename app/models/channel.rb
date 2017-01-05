@@ -1,5 +1,5 @@
 class Channel < ActiveRecord::Base
-  validates :name, :live_url, :image, presence: true
+  validates :name, :live_url, :image, :py_name, presence: true
   mount_uploader :image, ImageUploader
   
   has_and_belongs_to_many :nodes
