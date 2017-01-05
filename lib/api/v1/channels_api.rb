@@ -48,6 +48,8 @@ module API
           render_json(@channel, API::V1::Entities::ChannelDetail, { user: User.find_by(private_token: params[:token]) })
         end # end get
         
+        # 获取节目数据
+        # http://api.cntv.cn/epg/epginfo?serviceId=cbox&c=cctv5&d=20170106
         desc "获取某个频道的节目列表"
         params do
           requires :channel_id, type: Integer, desc: '频道ID'
