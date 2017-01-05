@@ -1,3 +1,4 @@
+require 'rest-client'
 class Channel < ActiveRecord::Base
   validates :name, :live_url, :image, :py_name, presence: true
   mount_uploader :image, ImageUploader
@@ -59,8 +60,28 @@ class Channel < ActiveRecord::Base
   end
   
   def playlists_for_offset(offset = 0)
+    return [] if py_name.blank?
+    
     date = Time.zone.now + offset.days
-    playlists.where(started_at: date.beginning_of_day..date.end_of_day).order('started_at asc')
+    cntv_api = "http://api.cntv.cn/epg/epginfo?serviceId=cbox&c=#{py_name}&d=#{date.strftime('%Y%m%d')}"
+    temp_results = []
+    RestClient.get(cntv_api, content_type: :json) { |resp, req, result|
+      res = JSON.parse(resp)
+      programs = res[py_name]['program']
+      
+      programs.each_with_index do |hash, index|
+        playlist = Playlist.new
+        playlist.id = 100
+        playlist.pl_id = self.chn_id * 10 + index
+        playlist.name  = hash['t']
+        playlist.started_at = Time.at(hash['st'])
+        playlist.ended_at = Time.at(hash['et'])
+        playlist.channel_id = self.id
+        temp_results << playlist
+      end
+    }
+    temp_results
+    # playlists.where(started_at: date.beginning_of_day..date.end_of_day).order('started_at asc')
   end
   
 end
