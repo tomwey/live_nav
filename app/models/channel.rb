@@ -67,18 +67,22 @@ class Channel < ActiveRecord::Base
     temp_results = []
     RestClient.get(cntv_api, content_type: :json) { |resp, req, result|
       res = JSON.parse(resp)
-      programs = res[py_name]['program']
       
-      programs.each_with_index do |hash, index|
-        playlist = Playlist.new
-        playlist.id = 100
-        playlist.pl_id = self.chn_id * 10 + index
-        playlist.name  = hash['t']
-        playlist.started_at = Time.at(hash['st'])
-        playlist.ended_at = Time.at(hash['et'])
-        playlist.channel_id = self.id
-        temp_results << playlist
+      if res && res[py_name] && res[py_name]['program']
+        programs = res[py_name]['program']
+      
+        programs.each_with_index do |hash, index|
+          playlist = Playlist.new
+          playlist.id = 100
+          playlist.pl_id = self.chn_id * 10 + index
+          playlist.name  = hash['t']
+          playlist.started_at = Time.at(hash['st'])
+          playlist.ended_at = Time.at(hash['et'])
+          playlist.channel_id = self.id
+          temp_results << playlist
+        end
       end
+      
     }
     temp_results
     # playlists.where(started_at: date.beginning_of_day..date.end_of_day).order('started_at asc')
