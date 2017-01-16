@@ -12,9 +12,9 @@ module Douyu
       puts url
       
       RestClient.get url, { aid: 'hbtv', time: time, auth: auth, accept: :json } do |resp|
-        puts JSON.parse(resp)
+        # puts JSON.parse(resp)
         # puts '---------------------------------------------'
-        # puts resp
+        puts resp
       end
       
     end

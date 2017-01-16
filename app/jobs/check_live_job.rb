@@ -28,7 +28,8 @@ class CheckLiveJob < ActiveJob::Base
             ls.live_url = result["data"]["live_url"]
             ls.online = true
             ls.save!
-          elsif result["error"] == 1010
+          # elsif result["error"] == 1010
+          else
             # puts '未直播'
             # 未直播
             ls.online = false
