@@ -12,7 +12,7 @@ class Channel < ActiveRecord::Base
   has_one :temp_screenshot, dependent: :destroy
   
   scope :opened, -> { where(opened: true) }
-  scope :sorted, -> { order('sort desc, id desc') }
+  scope :sorted, -> { order('sort asc, id desc') }
   
   # 设置chn_id
   after_save :set_chn_id_if_needed
