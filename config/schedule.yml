@@ -4,6 +4,6 @@ douyu_data_check:
   queue: scheduled_jobs
 
 yaobo_job:
-  cron: "*/20 * * * *"
+  cron: "*/6 * * * *"
   class: "FetchYaoboJob"
   queue: scheduled_jobs
