@@ -36,7 +36,7 @@ class FetchYaoboJob < ActiveJob::Base
                 ls.online = obj['status'] == '1' ? true : false
                 ls.save!
               else
-                ls = LiveStream.create(name: obj['title'], 
+                ls = LiveStream.create!(name: obj['title'], 
                                        remote_image_url: obj['cover'], 
                                        live_url: obj['flv'],
                                        source_name: '要播',
