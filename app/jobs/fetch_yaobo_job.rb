@@ -22,9 +22,14 @@ class FetchYaoboJob < ActiveJob::Base
       # puts JSON.parse(resp)
       # puts '---------------------------------------------'
       # puts resp
+      
       result = JSON.parse(resp)
       if result['code'] == 0
         if result['data'] && result['data']['lives']
+          
+          # 关闭所有的房间
+          LiveStream.where(source_name: '要播').update_all(opened: false)
+          
           result['data']['lives'].each do |item|
             obj = item['live']
             # puts obj
@@ -33,15 +38,22 @@ class FetchYaoboJob < ActiveJob::Base
               room_id = obj['liveid']
               ls = LiveStream.find_by(source_room_id: room_id)
               if ls.present?
+                if obj['status'] == '1'
+                  ls.opened = true
+                else
+                  ls.opened = false
+                end
                 ls.online = obj['status'] == '1' ? true : false
                 ls.save!
               else
-                ls = LiveStream.create!(name: obj['title'], 
+                if obj['status'] == '1'
+                    LiveStream.create!(name: obj['title'], 
                                        remote_image_url: obj['cover'], 
                                        live_url: obj['flv'],
                                        source_name: '要播',
                                        source_room_id: obj['liveid'],
-                                       online: obj['status'] == '1' ? true : false)
+                                       online: true)
+                end
               end
             end
           end
