@@ -43,8 +43,9 @@ class FetchYaoboJob < ActiveJob::Base
                 else
                   ls.opened = false
                 end
-                # puts obj['status'].to_s
-                ls.online = true#obj['status'].to_s == '1' ? true : false
+                puts obj['status'].to_s
+                ls.online = obj['status'].to_s == '1' ? true : false
+                puts ls.online
                 ls.save!
               else
                 puts 'create'
