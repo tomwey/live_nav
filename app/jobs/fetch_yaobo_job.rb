@@ -45,8 +45,10 @@ class FetchYaoboJob < ActiveJob::Base
                 end
                 puts obj['status'].to_s
                 ls.online = obj['status'].to_s == '1' ? true : false
-                puts ls.online
-                ls.save!
+                # puts ls.online
+                # ls.update_attribute(:online, true)
+                # ls.save!
+                ls.save(validate: false)
               else
                 puts 'create'
                 if obj['status'].to_s == '1'
