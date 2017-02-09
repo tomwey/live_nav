@@ -3,7 +3,7 @@ douyu_data_check:
   class: "CheckLiveJob"
   queue: scheduled_jobs
 
-# yaobo_job:
-#   cron: "*/6 * * * *"
-#   class: "FetchYaoboJob"
-#   queue: scheduled_jobs
+yaobo_job:
+  cron: "*/3 * * * *"
+  class: "FetchYaoboJob"
+  queue: scheduled_jobs

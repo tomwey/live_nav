@@ -8,7 +8,7 @@ class CheckLiveJob < ActiveJob::Base
     
     puts 'start ...'
     
-    LiveStream.opened.each do |ls|
+    LiveStream.where(source_name: '斗鱼').opened.each do |ls|
       room_id = ls.source_room_id
       
       if not room_id.blank?
