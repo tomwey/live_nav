@@ -38,15 +38,16 @@ class FetchYaoboJob < ActiveJob::Base
               room_id = obj['liveid']
               ls = LiveStream.find_by(source_room_id: room_id)
               if ls.present?
-                if obj['status'] == '1'
+                if obj['status'].to_s == '1'
                   ls.opened = true
                 else
                   ls.opened = false
                 end
-                ls.online = obj['status'] == '1' ? true : false
+                puts obj['status'].to_s
+                ls.online = obj['status'].to_s == '1' ? true : false
                 ls.save!
               else
-                if obj['status'] == '1'
+                if obj['status'].to_s == '1'
                   name = obj['title']
                   if name.blank?
                     name = item['user']['nickname']
