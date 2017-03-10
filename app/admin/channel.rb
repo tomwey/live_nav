@@ -18,7 +18,11 @@ index do
   column('ID',:id) { |channel| link_to channel.id, cpanel_channel_path(channel) }
   column(:name, sortable: false) { |channel| link_to channel.name, cpanel_channel_path(channel) }
   column :image, sortable: false do |channel|
-    channel.real_image.blank? ? '' : image_tag channel.real_image
+    if channel.real_image.blank?
+      ''
+    else
+      image_tag channel.real_image
+    end
   end
   column '所属节点' do |channel|
     raw("#{channel.nodes.map { |node| node.name }.join('<br>')}")
