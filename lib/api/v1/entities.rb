@@ -74,7 +74,7 @@ module API
         expose :view_count
         # expose :intro, format_with: :null
         expose :title do |model, opts|
-          model.current_playlist.try(:name) || '该频道正在播放的节目名称'
+          model.current_playlist.try(:name) || ''
         end
         expose :image do |model, opts|
           # model.image.blank? ? '' : model.image.url(:thumb)
