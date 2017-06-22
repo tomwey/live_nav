@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
+  get 'mifi/login'
+
+  get 'mifi/connect'
+
+  get 'mifi/auth'
+
   mount RedactorRails::Engine => '/redactor_rails'
   
   # 网页文档
   resources :pages, path: :p, only: [:show]
+  
+  get '/login'   => 'mifi#login'
+  get '/connect' => 'mifi#connect', as: :connect
+  get '/auth'    => 'mifi#auth'
+  get '/welcome' => 'mifi#welcome'
   
   # 后台系统登录
   devise_for :admins, ActiveAdmin::Devise.config

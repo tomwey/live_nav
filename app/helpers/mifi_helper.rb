@@ -1,0 +1,2 @@
+module MifiHelper
+end
