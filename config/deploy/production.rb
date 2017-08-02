@@ -7,9 +7,9 @@
 set :stage, :production
 set :branch, 'master'
 
-role :app, %w{deployer@106.75.27.94}
-role :web, %w{deployer@106.75.27.94}
-role :db,  %w{deployer@106.75.27.94}
+role :app, %w{deployer@120.132.57.133}
+role :web, %w{deployer@120.132.57.133}
+role :db,  %w{deployer@120.132.57.133}
 
 set :server_name, "deyiwifi.com"
 # set :port, "80" # 默认都是80端口
@@ -26,14 +26,14 @@ set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '106.75.27.94', user: "deployer", roles: %w{web app db}, primary: true
+server '120.132.57.133', user: "deployer", roles: %w{web app db}, primary: true
 
 set :deploy_to, "/data/www/apps/#{fetch(:full_app_name)}"
 #"/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
 
 set :rails_env, :production
 
-set :unicorn_worker_count, 5
+set :unicorn_worker_count, 2
 
 set :enable_ssl, false
 
