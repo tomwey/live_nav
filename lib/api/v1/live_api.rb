@@ -11,14 +11,14 @@ module API
           use :pagination
         end
         get :list do
-          # @streams = LiveStream.opened.sorted
-          # 
-          # if params[:page]
-          #   @streams = @streams.paginate page: params[:page], per_page: page_size
-          # end
-          # 
-          # render_json(@streams, API::V1::Entities::LiveStream)
-          { code: 0, message: 'ok', data: [] }
+          @streams = LiveStream.opened.sorted
+          
+          if params[:page]
+            @streams = @streams.paginate page: params[:page], per_page: page_size
+          end
+          
+          render_json(@streams, API::V1::Entities::LiveStream)
+          # { code: 0, message: 'ok', data: [] }
         end # end get list
         
         desc "获取直播详情"
