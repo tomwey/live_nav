@@ -1,4 +1,4 @@
-source 'https://ruby.taobao.org'
+source 'https://gems.ruby-china.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -112,8 +112,8 @@ gem 'grape-swagger-rails'
 gem 'rest-client'
 
 # Use unicorn as the app server
-gem 'unicorn'
-gem 'unicorn-worker-killer'
+# gem 'unicorn'
+# gem 'unicorn-worker-killer'
 
 # memcached
 gem 'dalli'
@@ -122,7 +122,7 @@ gem 'dalli'
 gem 'state_machine'
 
 # puma
-#gem 'puma'
+gem 'puma'
 
 # Use Capistrano for deployment
 group :development do
@@ -137,7 +137,7 @@ group :development do
   gem 'capistrano-rbenv', "~> 2.0" 
   
   # puma server
-  # gem 'capistrano3-puma', require: false
+  gem 'capistrano3-puma', require: false
   
   gem 'capistrano-sidekiq'
   
